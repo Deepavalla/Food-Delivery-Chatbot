@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<body>
+<h2>Chatbot</h2>
+<input id="msg">
+<button onclick="send()">Send</button>
+
+<script>
+function send() {
+    let msg = document.getElementById("msg").value;
+
+    fetch("http://localhost:8000/", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+            queryResult: {
+                intent: {displayName: "new.order"},
+                parameters: {"food-item": msg, "number": 1}
+            }
+        })
+    })
+    .then(res => res.json())
+    .then(data => alert(data.fulfillmentText));
+}
+</script>
+</body>
+</html>
